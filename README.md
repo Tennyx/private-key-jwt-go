@@ -9,10 +9,7 @@ This repo aims to simplify the process of creating a public/private key pair, us
 
 ## Setup
 1. Clone the repo, open terminal and ```cd``` into the project root.
-2. Create a new virtualenv in the root folder with ```virtualenv env```
-3. Run the virtual environment with ```source env/bin/activate```
-4. Install necessary Python packages with ```pip install -r requirements.txt```
-5. In the root folder, create a new .env file and paste the following values into it:
+2. In the root folder, create a new .env file and paste the following values into it:
 
 ```
 PRIVATE_KEY=
@@ -35,17 +32,21 @@ Scripts will generate values for the first 4 vars. You will need to fill out the
 
 ## Running the Scripts
 
-To run these scripts, make sure you are still in the root folder of the cloned repository.
+To run these scripts, make sure you are still in the root folder of the cloned repository. Run the command `go run .` This will give you a menu of the three tasks to setup and run this flow:
 
-### Generate Keypair
+```
+Which task would you like to run?
+ 
+[1] Generate Keys 
+[2] Create Okta Service App 
+[3] Create PKJ and get Access Token
+```
+
+### [1] Generate Keys
 
 In the Private Key JWT flow, the first step you need to take is generating a public/private keypair. The public key is shared with the identity provider to verify the JWT signed with your private key. To generate the keys, type the following command into the terminal:
 
-```
-python generate_keys.py
-```
-
-You should see confirmation printed to the terminal:
+If you input `1`, you should see confirmation printed to the terminal:
 
 ```
 ///////////////// Keys generated and added to .env file.
@@ -53,41 +54,28 @@ You should see confirmation printed to the terminal:
 
 Sure enough, you can pop over to the .env file to see the values populated there.
 
-### Create OAuth Service App in Okta
+### [2] Create Okta Service App 
 
-Now that you have the keypair, you can create the OAuth app in Okta with the public key. The scopes you defined above will also be granted in the application. Type the following into the terminal:
-
-```
-python create_okta_service_app.py
-```
-
-You will get confirmation in the terminal of the created app, that the client ID of the app was updated in your .env file, as well as scopes granted.
+Now that you have the keypair, you can create the OAuth app in Okta with the public key. The scopes you defined above will also be granted in the application. 
+If you input `2`, you will get confirmation in the terminal of the created app, that the client ID of the app was updated in your .env file, as well as scopes granted.
 
 ```
 ///////////////// Okta Service app created: 
 
 {application object}
 
-///////////////// Setting CLIENT_ID in .env:
+///////////////// Scope granted: 
 
-{client ID of newly created app}
-
-///////////////// Scopes granted: 
-
-{scopes granted to the application}
+{scope(s) granted to the application}
 ```
 
-If you navigate to your applications in Okta, you will see this newly created app under the name **Private Key JWT Service App**.
+If you navigate to your applications in Okta, you will see this newly created app under the name **Private Key JWT Service App (Go)**. In your `.env` file you will see this new app's client Id populated in the `CLIENT_ID` var.
 
-### Get Access Token
+### [3] Create PKJ and get Access Token
 
-The above two scripts should only need to be ran once for setup. From hereon out, you can run the following command to get an access token from Okta:
+The above two tasks should only need to be ran once for setup. From hereon out, you can run the third task to get an access token from Okta:
 
-```
-python get_access_token.py
-```
-
-You should see the access token printed to terminal:
+Input `3` and you should see the access token printed to terminal:
 
 ```
 ///////////////// Access Token:
